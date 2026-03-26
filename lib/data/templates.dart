@@ -1,0 +1,27 @@
+class TemplateData {
+  static const List<Map<String, String>> managerTemplates = [
+    {"title": "Standard 1-on-1", "description": "Regular check-in to discuss progress, blockers, and growth.", "content": "Check-in & Mood:\nBlockers & Needs:\nPriorities:\nCareer & Growth:"},
+    {"title": "First 1-on-1", "description": "Initial meeting to establish rapport and expectations.", "content": "Get to know you:\nPast experience:\nExpectations:\nCommunication style preferences:"},
+    {"title": "Skip-Level 1-on-1", "description": "Meeting with your manager's manager for broader alignment.", "content": "High-level thoughts:\nTeam challenges:\nIdeas for improvement:\nFeedback for management:"},
+    {"title": "Career Coaching", "description": "Dedicated session focusing purely on long-term career trajectory.", "content": "Long-term goals:\nSkills to develop:\nNext 6 months focus:\nHow can I support?:"},
+    {"title": "Underperformance Check-in", "description": "Addressing performance gaps and creating an action plan.", "content": "Current gaps:\nRoot causes/Blockers:\nAction plan:\nTimeline for improvement:"},
+    {"title": "Peer 1-on-1", "description": "Syncing with a colleague at the same level for collaboration.", "content": "Collaboration feedback:\nDependencies/Blockers:\nShared ideas:\nNext steps:"},
+    {"title": "Return from Leave", "description": "Re-onboarding a team member after an extended absence.", "content": "Welcome back:\nCatch-up on major changes:\nAdjusted priorities:\nTransition support needs:"},
+    {"title": "Spot Check/Sync", "description": "Brief, ad-hoc catch-up on a specific immediate topic.", "content": "Current focus:\nQuick blockers:\nNext action:"},
+    {"title": "Weekly Team Sync", "description": "Weekly gathering to align the team on projects and wins.", "content": "Wins & Milestones:\nProject Updates:\nKey Roadblocks:\nAction Items:"},
+    {"title": "Daily Standup", "description": "Quick daily status update to unblock the team.", "content": "Done yesterday:\nDoing today:\nBlockers:"},
+    {"title": "Sprint Planning", "description": "Planning and allocating work for the upcoming sprint cycle.", "content": "Sprint Goal:\nCapacity & Allocation:\nBacklog items committed:\nRisks:"},
+    {"title": "Sprint Retrospective", "description": "Reflecting on the past sprint to improve future processes.", "content": "What went well?:\nWhat didn't go well?:\nIdeas for improvement:\nAction items for next sprint:"},
+    {"title": "Monthly All-Hands", "description": "Company or department-wide meeting for major updates.", "content": "Company updates:\nKey metrics review:\nRecognition/Shoutouts:\nQ&A:"},
+    {"title": "Brainstorming Session", "description": "Creative session to generate ideas and solutions.", "content": "Objective:\nIdeas generated:\nFeasibility discussion:\nSelected ideas to pursue:"},
+    {"title": "Architecture Review", "description": "Technical discussion to evaluate system architecture proposals.", "content": "Proposed design:\nPros & Cons:\nSecurity/Scale concerns:\nDecision:"},
+    {"title": "Design Review", "description": "Reviewing UX/UI designs for feedback and iteration.", "content": "UX/UI Walkthrough:\nFeedback points:\nIteration plan:"},
+    {"title": "Cross-functional Sync", "description": "Meeting between different departments to align on joint efforts.", "content": "Department updates:\nInter-team dependencies:\nJoint action items:"},
+    {"title": "Project Kickoff", "description": "Official start of a project to align stakeholders and team.", "content": "Project Objectives:\nScope & Deliverables:\nTimeline & Milestones:\nRoles & Responsibilities:"},
+    {"title": "Project Status Update", "description": "Routine update on project health, risks, and next steps.", "content": "Overall Health (R/Y/G):\nCompleted since last:\nUp next:\nRisks/Issues:"},
+    {"title": "Post-Mortem / RCA", "description": "Root cause analysis after a major incident or project close.", "content": "Incident summary:\nTimeline of events:\nRoot Cause:\nPreventative measures:"},
+    {"title": "Risk Assessment", "description": "Identifying and mitigating project or operational risks.", "content": "Identified risks:\nImpact & Probability:\nMitigation strategies:\nOwners:"},
+    {"title": "Go/No-Go Decision", "description": "Final check before deploying or launching a major initiative.", "content": "Launch readiness criteria:\nRed flags:\nApprovals:\nNext steps:"},
+    {"title": "Scope Change Request", "description": "Evaluating requests to alter project scope, timeline, or budget.", "content": "Change description:\nImpact on timeline:\nImpact on budget:\nApproval status:"},
+  ];
+}
