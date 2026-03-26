@@ -15,6 +15,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String _searchQuery = '';
   int _selectedIndex = 0;
 
+  // Mock User Data
   final String _userName = "Tejas";
   String _greeting = "Hello,";
   Timer? _greetingTimer;
@@ -23,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _updateGreeting();
+    // Update greeting every minute to keep it perfectly in sync with real-time
     _greetingTimer = Timer.periodic(const Duration(minutes: 1), (_) => _updateGreeting());
   }
 
@@ -63,19 +65,19 @@ class _HomeScreenState extends State<HomeScreen> {
       _notes.add(note);
       _searchQuery = '';
     });
-    _showSnackBar('Note added successfully!');
+    _showSnackBar('Note added successfully! 🎉');
   }
 
   void _deleteNote(Note note) {
     setState(() => _notes.remove(note));
-    _showSnackBar('Note deleted.');
+    _showSnackBar('Note moved to trash. 🗑️');
   }
 
   void _updateNote(Note oldNote, Note updatedNote) {
     final index = _notes.indexOf(oldNote);
     if (index != -1) {
       setState(() => _notes[index] = updatedNote);
-      _showSnackBar('Note updated!');
+      _showSnackBar('Note updated! ✏️');
     }
   }
 
@@ -109,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildFavoritesTab() {
     final favoriteNotes = _notes.where((n) => n.isFavorite).toList();
-
+    
     if (favoriteNotes.isEmpty) {
       return Center(
         child: Column(
@@ -124,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       );
     }
-
+    
     return ListView.builder(
       physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.fromLTRB(8, 20, 8, 100),
@@ -139,6 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
             setState(() {
               note.isFavorite = !note.isFavorite;
             });
+            _showSnackBar(note.isFavorite ? 'Note added to Favorites! ⭐️' : 'Removed from Favorites.');
           },
         );
       },
@@ -173,17 +176,25 @@ class _HomeScreenState extends State<HomeScreen> {
         child: IndexedStack(
           index: _selectedIndex,
           children: [
+            // Tab 0: Home
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                // Custom Header
                 Padding(
                   padding: const EdgeInsets.fromLTRB(24, 20, 24, 10),
                   child: Text(
                     _greeting,
-                    style: const TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: Colors.black87, letterSpacing: -0.5),
+                    style: const TextStyle(
+                      fontSize: 32,
+                      fontWeight: FontWeight.w900,
+                      color: Colors.black87,
+                      letterSpacing: -0.5,
+                    ),
                   ),
                 ),
-
+                
+                // Premium Search Bar
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                   child: Container(
@@ -200,13 +211,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         hintText: 'Search across all notes...',
                         hintStyle: TextStyle(color: Colors.grey.shade400, fontWeight: FontWeight.w500),
                         prefixIcon: const Icon(Icons.search, color: Colors.blueAccent),
-                        suffixIcon: _searchQuery.isNotEmpty
+                        suffixIcon: _searchQuery.isNotEmpty 
                           ? IconButton(
                               icon: const Icon(Icons.clear, color: Colors.grey),
                               onPressed: () {
                                 setState(() => _searchQuery = '');
                               },
-                            )
+                            ) 
                           : null,
                         border: InputBorder.none,
                         contentPadding: const EdgeInsets.all(18),
@@ -217,34 +228,54 @@ class _HomeScreenState extends State<HomeScreen> {
 
                 const SizedBox(height: 10),
 
+                // Main Content Area
                 Expanded(
                   child: _notes.isEmpty
-                      ? Center(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: const EdgeInsets.all(24),
-                                decoration: BoxDecoration(
-                                  color: Colors.blue.shade50,
-                                  shape: BoxShape.circle,
+                      ? Stack(
+                          fit: StackFit.expand,
+                          children: [
+                            Image.asset(
+                              'assets/images/empty_notes.png',
+                              fit: BoxFit.cover,
+                            ),
+                            Container(
+                              color: Colors.white.withOpacity(0.9),
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  padding: const EdgeInsets.all(24),
+                                  decoration: BoxDecoration(
+                                    color: Colors.blue.shade50,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(Icons.library_books, size: 64, color: Colors.blueAccent),
                                 ),
-                                child: const Icon(Icons.library_books, size: 64, color: Colors.blueAccent),
-                              ),
-                              const SizedBox(height: 24),
-                              const Text(
-                                "Your workspace is empty",
-                                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w900, color: Colors.black87, letterSpacing: -0.5),
-                              ),
-                              const SizedBox(height: 12),
-                              Text(
-                                "Create your first note to get started.",
-                                style: TextStyle(fontSize: 16, color: Colors.grey.shade600, fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
+                                const SizedBox(height: 24),
+                                const Text(
+                                  "Your workspace is empty",
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w900,
+                                    color: Colors.black87,
+                                    letterSpacing: -0.5,
+                                  ),
+                                ),
+                                const SizedBox(height: 12),
+                                Text(
+                                  "Create your first beautiful note today.",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    color: Colors.grey.shade600,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         )
-                      : _filteredNotes.isEmpty
+                      : _filteredNotes.isEmpty 
                           ? Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -257,27 +288,46 @@ class _HomeScreenState extends State<HomeScreen> {
                             )
                           : ListView.builder(
                               physics: const BouncingScrollPhysics(),
-                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 100),
+                              padding: const EdgeInsets.fromLTRB(8, 8, 8, 100), // extra padding for FAB
                               itemCount: _filteredNotes.length,
                               itemBuilder: (ctx, i) {
                                 final note = _filteredNotes[i];
-                                return NoteCard(
-                                  note: note,
-                                  onDelete: () => _deleteNote(note),
-                                  onEdit: (updated) => _updateNote(note, updated),
-                                  onToggleFavorite: () {
-                                    setState(() {
-                                      note.isFavorite = !note.isFavorite;
-                                    });
-                                  },
+                                return Dismissible(
+                                  key: ValueKey(note.title + note.date.toString()),
+                                  direction: DismissDirection.endToStart,
+                                  onDismissed: (_) => _deleteNote(note),
+                                  background: Container(
+                                    alignment: Alignment.centerRight,
+                                    padding: const EdgeInsets.only(right: 32),
+                                    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFFF5252),
+                                      borderRadius: BorderRadius.circular(24),
+                                    ),
+                                    child: const Icon(Icons.delete_sweep, color: Colors.white, size: 32),
+                                  ),
+                                  child: NoteCard(
+                                    note: note,
+                                    onDelete: () => _deleteNote(note),
+                                    onEdit: (updated) => _updateNote(note, updated),
+                                    onToggleFavorite: () {
+                                      setState(() {
+                                        note.isFavorite = !note.isFavorite;
+                                      });
+                                      _showSnackBar(note.isFavorite ? 'Note added to Favorites! ⭐️' : 'Removed from Favorites.');
+                                    },
+                                  ),
                                 );
                               },
                             ),
                 ),
               ],
             ),
+            // Tab 1: Shared
             _buildSharedTab(),
+            // Tab 2: Favorites
             _buildFavoritesTab(),
+            // Tab 3: Settings
             _buildSettingsTab(),
           ],
         ),
@@ -290,7 +340,17 @@ class _HomeScreenState extends State<HomeScreen> {
         onPressed: () async {
           final newNote = await Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => AddNoteScreen()),
+            PageRouteBuilder(
+              pageBuilder: (context, animation, secondaryAnimation) => AddNoteScreen(),
+              transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                return SlideTransition(
+                  position: Tween(begin: const Offset(0.0, 1.0), end: Offset.zero).animate(
+                    CurvedAnimation(parent: animation, curve: Curves.easeOutQuart)
+                  ),
+                  child: child,
+                );
+              },
+            ),
           );
           if (newNote != null) _addNote(newNote);
         },
