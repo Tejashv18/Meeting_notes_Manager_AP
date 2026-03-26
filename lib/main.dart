@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/home_screen.dart';
 
 void main() {
   runApp(MeetingNotesApp());
@@ -14,10 +15,7 @@ class MeetingNotesApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Meeting Notes')),
-        body: const Center(child: Text('Welcome to Meeting Notes')),
-      ),
+      home: HomeScreen(),
     );
   }
 }
