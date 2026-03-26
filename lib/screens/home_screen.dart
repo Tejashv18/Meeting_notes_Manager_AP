@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../models/note.dart';
+import '../widgets/note_card.dart';
+import 'add_note_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -8,13 +10,32 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final List<Note> _notes = [];
+  String _searchQuery = '';
+
+  List<Note> get _filteredNotes {
+    if (_searchQuery.isEmpty) return _notes.reversed.toList();
+    return _notes.where((note) {
+      return note.title.toLowerCase().contains(_searchQuery.toLowerCase()) ||
+             note.content.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList().reversed.toList();
+  }
 
   void _addNote(Note note) {
-    setState(() => _notes.add(note));
+    setState(() {
+      _notes.add(note);
+      _searchQuery = '';
+    });
   }
 
   void _deleteNote(Note note) {
     setState(() => _notes.remove(note));
+  }
+
+  void _updateNote(Note oldNote, Note updatedNote) {
+    final index = _notes.indexOf(oldNote);
+    if (index != -1) {
+      setState(() => _notes[index] = updatedNote);
+    }
   }
 
   @override
@@ -29,10 +50,28 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.fromLTRB(24, 20, 24, 10),
               child: const Text(
                 "Meeting Notes",
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.w900,
-                  color: Colors.black87,
+                style: TextStyle(fontSize: 32, fontWeight: FontWeight.w900, color: Colors.black87),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(color: Colors.blueGrey.withOpacity(0.08), blurRadius: 20, offset: const Offset(0, 10))
+                  ]
+                ),
+                child: TextField(
+                  onChanged: (val) => setState(() => _searchQuery = val),
+                  decoration: InputDecoration(
+                    hintText: 'Search notes...',
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    prefixIcon: const Icon(Icons.search, color: Colors.blueAccent),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.all(18),
+                  ),
                 ),
               ),
             ),
@@ -46,21 +85,19 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 24),
                           const Text("No notes yet", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 12),
-                          Text("Tap + to create your first note", style: TextStyle(color: Colors.grey.shade600)),
+                          Text("Tap + to create a note", style: TextStyle(color: Colors.grey.shade600)),
                         ],
                       ),
                     )
                   : ListView.builder(
-                      itemCount: _notes.length,
+                      physics: const BouncingScrollPhysics(),
+                      padding: const EdgeInsets.fromLTRB(8, 8, 8, 100),
+                      itemCount: _filteredNotes.length,
                       itemBuilder: (ctx, i) {
-                        final note = _notes[i];
-                        return ListTile(
-                          title: Text(note.title),
-                          subtitle: Text(note.content, maxLines: 2),
-                          trailing: IconButton(
-                            icon: const Icon(Icons.delete),
-                            onPressed: () => _deleteNote(note),
-                          ),
+                        final note = _filteredNotes[i];
+                        return NoteCard(
+                          note: note,
+                          onDelete: () => _deleteNote(note),
                         );
                       },
                     ),
@@ -71,7 +108,13 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.blueAccent,
         child: const Icon(Icons.add, color: Colors.white),
-        onPressed: () {},
+        onPressed: () async {
+          final newNote = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => AddNoteScreen()),
+          );
+          if (newNote != null) _addNote(newNote);
+        },
       ),
     );
   }
