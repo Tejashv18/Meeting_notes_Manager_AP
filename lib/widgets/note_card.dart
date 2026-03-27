@@ -13,13 +13,13 @@ class NoteCard extends StatelessWidget {
 
   List<Color> _getGradientForNote(String title) {
     final gradients = [
-      [Color(0xFFFF9A9E), Color(0xFFFECFEF)],
-      [Color(0xFFa18cd1), Color(0xFFfbc2eb)],
-      [Color(0xFF84fab0), Color(0xFF8fd3f4)],
-      [Color(0xFFfccb90), Color(0xFFd57eeb)],
-      [Color(0xFFe0c3fc), Color(0xFF8ec5fc)],
-      [Color(0xFFfdcbf1), Color(0xFFe6dee9)],
-      [Color(0xFFa1c4fd), Color(0xFFc2e9fb)],
+      [Color(0xFFFF9A9E), Color(0xFFFECFEF)], // Pink/Peach
+      [Color(0xFFa18cd1), Color(0xFFfbc2eb)], // Purple/Pink
+      [Color(0xFF84fab0), Color(0xFF8fd3f4)], // Mint/Blue
+      [Color(0xFFfccb90), Color(0xFFd57eeb)], // Orange/Violet
+      [Color(0xFFe0c3fc), Color(0xFF8ec5fc)], // Lavender/Blue
+      [Color(0xFFfdcbf1), Color(0xFFe6dee9)], // Soft Pink
+      [Color(0xFFa1c4fd), Color(0xFFc2e9fb)], // Sky Blue
     ];
     int hash = 0;
     for (int i = 0; i < title.length; i++) {
@@ -31,7 +31,7 @@ class NoteCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gradientColors = _getGradientForNote(note.title);
-
+    
     return GestureDetector(
       onTap: () async {
         final updatedNote = await Navigator.push(
@@ -56,8 +56,8 @@ class NoteCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(24),
           boxShadow: [
             BoxShadow(
-              color: gradientColors[0].withOpacity(0.35),
-              blurRadius: 10,
+              color: gradientColors[0].withOpacity(0.4),
+              blurRadius: 12,
               offset: const Offset(0, 6),
             )
           ],
@@ -72,7 +72,12 @@ class NoteCard extends StatelessWidget {
                 Expanded(
                   child: Text(
                     note.title,
-                    style: TextStyle(fontWeight: FontWeight.w800, fontSize: 22, color: Colors.black.withOpacity(0.85), height: 1.2),
+                    style: TextStyle(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 22,
+                      color: Colors.black.withOpacity(0.85),
+                      height: 1.2,
+                    ),
                   ),
                 ),
                 Row(
@@ -86,7 +91,7 @@ class NoteCard extends StatelessWidget {
                         ),
                         child: IconButton(
                           icon: Icon(
-                            note.isFavorite ? Icons.star_rounded : Icons.star_outline_rounded,
+                            note.isFavorite ? Icons.star_rounded : Icons.star_outline_rounded, 
                             color: note.isFavorite ? Colors.white : Colors.black.withOpacity(0.8)
                           ),
                           onPressed: onToggleFavorite,
@@ -112,7 +117,11 @@ class NoteCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               note.content,
-              style: TextStyle(fontSize: 16, color: Colors.black.withOpacity(0.7), height: 1.4),
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black.withOpacity(0.7),
+                height: 1.4,
+              ),
               maxLines: 4,
               overflow: TextOverflow.ellipsis,
             ),
@@ -133,7 +142,11 @@ class NoteCard extends StatelessWidget {
                       const SizedBox(width: 6),
                       Text(
                         DateFormat.MMMd().format(note.date),
-                        style: TextStyle(fontSize: 13, color: Colors.black.withOpacity(0.8), fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.black.withOpacity(0.8),
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
