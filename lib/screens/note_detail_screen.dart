@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/note.dart';
 
 class NoteDetailScreen extends StatefulWidget {
@@ -29,6 +30,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       title: _titleController.text.trim(),
       content: _contentController.text.trim(),
       date: DateTime.now(),
+      isFavorite: widget.note.isFavorite,
     );
     Navigator.pop(context, updatedNote);
   }
@@ -45,7 +47,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.check_circle, size: 28, color: Colors.blueAccent),
-            tooltip: 'Save',
+            tooltip: 'Save Note',
             onPressed: _saveChanges,
           ),
           const SizedBox(width: 8),
@@ -57,10 +59,15 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
           children: [
             TextField(
               controller: _titleController,
-              style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.black87),
+              style: const TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.w900,
+                color: Colors.black87,
+                letterSpacing: -0.5,
+              ),
               decoration: InputDecoration(
                 border: InputBorder.none,
-                hintText: "Title",
+                hintText: "Note Title",
                 hintStyle: TextStyle(color: Colors.grey.shade400),
               ),
             ),
@@ -70,10 +77,14 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
                 controller: _contentController,
                 maxLines: null,
                 keyboardType: TextInputType.multiline,
-                style: const TextStyle(fontSize: 16, height: 1.5, color: Colors.black87),
+                style: const TextStyle(
+                  fontSize: 18, 
+                  height: 1.6,
+                  color: Colors.black87,
+                ),
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: "Type your notes...",
+                  hintText: "Start typing your notes here...",
                   hintStyle: TextStyle(color: Colors.grey.shade400),
                 ),
               ),
@@ -85,7 +96,7 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
         backgroundColor: Colors.black87,
         elevation: 8,
         icon: const Icon(Icons.save, color: Colors.white),
-        label: const Text("Save", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
+        label: const Text("Save & Exit", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white)),
         onPressed: _saveChanges,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
